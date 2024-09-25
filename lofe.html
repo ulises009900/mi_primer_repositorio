@@ -12,10 +12,24 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            position: relative;
         }
         h1 {
             color: #e63946;
             margin-top: 50px;
+        }
+        .poem {
+            font-size: 20px;
+            color: #333;
+            width: 80%;
+            margin: 20px auto;
+            text-align: left;
+            line-height: 1.8;
+            white-space: pre-wrap; /* Para que respete los saltos de línea */
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para que el texto sea legible */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         button {
             background-color: #ff6f61;
@@ -30,51 +44,33 @@
         button:hover {
             background-color: #ff8a80;
         }
-        #carousel {
-            margin: 0 auto;
-            width: 100%;
-            height: 100vh;
-            position: fixed;
+        /* Estilo para las imágenes que "llueven" */
+        #falling-images {
+            position: absolute;
             top: 0;
             left: 0;
-            z-index: -1;
-            overflow: hidden;
-            display: none;
-        }
-        #carousel img {
             width: 100%;
-            height: auto;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1; /* Las imágenes están detrás del texto */
+        }
+        .falling-img {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 100%;
-            transition: left 1s ease-in-out;
+            width: 100px;
+            height: auto;
+            opacity: 0.8;
+            animation: fall 10s linear infinite;
         }
-        #carousel img.active {
-            left: 0;
-        }
-        #carousel img.prev {
-            left: -100%;
-        }
-        .marquee-container {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            box-sizing: border-box;
-            padding: 20px 0;
-            position: relative;
-            z-index: 1;
-        }
-        .marquee-text {
-            display: inline-block;
-            padding-left: 100%;
-            animation: marquee 20s linear infinite;
-            font-size: 20px;
-            color: #333;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        /* Animación para hacer que las imágenes "caigan" */
+        @keyframes fall {
+            0% {
+                top: -150px;
+                left: calc(100% * var(--start));
+            }
+            100% {
+                top: 100vh;
+                left: calc(100% * var(--end));
+            }
         }
     </style>
 </head>
@@ -82,57 +78,68 @@
 
     <h1>Feliz aniversario mi flaca, te amo</h1>
 
-    <!-- Texto en movimiento, siempre visible -->
-    <div class="marquee-container">
-        <div class="marquee-text">
-            Mientras tú existas, mientras mi mirada te busque más allá de las colinas, 
-            mientras nada me llene el corazón, si no es tu imagen, y haya una remota 
-            posibilidad de que estés viva en algún sitio, iluminada por una luz cualquiera...
-        </div>
+    <!-- Texto en formato de poema -->
+    <div class="poem">
+        Mientras tú existas,<br>
+        mientras mi mirada<br>
+        te busque más allá de las colinas,<br>
+        mientras nada<br>
+        me llene el corazón,<br>
+        si no es tu imagen, y haya<br>
+        una remota posibilidad de que estés viva<br>
+        en algún sitio, iluminada<br>
+        por una luz cualquiera...<br>
+        Mientras<br>
+        yo presienta que eres y te llamas<br>
+        así, con ese nombre tuyo<br>
+        tan pequeño,<br>
+        seguiré como ahora, amada<br>
+        mía,<br>
+        transido de distancia,<br>
+        bajo ese amor que crece y no se muere,<br>
+        bajo ese amor que sigue y nunca acaba.
     </div>
 
-    <!-- Botón para mostrar las fotos, ubicado debajo del texto -->
-    <button onclick="showCarousel()">Te Amo</button>
+    <!-- Botón para mostrar las fotos debajo del poema -->
+    <button onclick="startFallingImages()">Te Amo</button>
 
-    <!-- Carrusel de fotos como fondo -->
-    <div id="carousel">
-        <img src="IMG_20240915_162810.jpg" alt="Foto 1">
-        <img src="IMG_20240915_163033.jpg" alt="Foto 2">
-        <img src="IMG_20240920_214429.jpg" alt="Foto 3">
-        <img src="IMG_20240923_191339.jpg" alt="Foto 4">
-        <img src="IMG_20240923_191508.jpg" alt="Foto 5">
-        <img src="IMG_20240923_191513.jpg" alt="Foto 6">
-        <img src="IMG_20240923_191522.jpg" alt="Foto 7">
-        <img src="IMG_20240923_191845.jpg" alt="Foto 8">
-        <img src="IMG-20240715-WA0004.jpg" alt="Foto 9">
-        <img src="IMG-20240715-WA0005.jpg" alt="Foto 10">
-        <img src="IMG-20240715-WA0006.jpg" alt="Foto 11">
-        <img src="IMG-20240715-WA0007.jpg" alt="Foto 12">
-        <img src="IMG-20240715-WA0008.jpg" alt="Foto 13">
-        <img src="IMG-20240724-WA0002.jpg" alt="Foto 14">
-        <img src="IMG-20240816-WA0000.jpg" alt="Foto 15">
-        <img src="IMG-20240816-WA0001.jpg" alt="Foto 16">
-        <img src="IMG-20240816-WA0002.jpg" alt="Foto 17">
-        <img src="IMG-20240923-WA0016.jpg" alt="Foto 18">
-        <img src="IMG-20240923-WA0017.jpg" alt="Foto 19">
-        <img src="IMG-20240923-WA0018.jpg" alt="Foto 20">
-    </div>
+    <!-- Contenedor de imágenes que "llueven" -->
+    <div id="falling-images"></div>
 
     <script>
-        let currentIndex = 0;
-        const images = document.querySelectorAll('#carousel img');
+        const imageSources = [
+            "IMG_20240915_162810.jpg",
+            "IMG_20240915_163033.jpg",
+            "IMG_20240920_214429.jpg",
+            "IMG_20240923_191339.jpg",
+            "IMG_20240923_191508.jpg",
+            "IMG_20240923_191513.jpg",
+            "IMG_20240923_191522.jpg",
+            "IMG_20240923_191845.jpg",
+            "IMG-20240715-WA0004.jpg",
+            "IMG-20240715-WA0005.jpg",
+            "IMG-20240715-WA0006.jpg",
+            "IMG-20240715-WA0007.jpg",
+            "IMG-20240715-WA0008.jpg",
+            "IMG-20240724-WA0002.jpg",
+            "IMG-20240816-WA0000.jpg",
+            "IMG-20240816-WA0001.jpg",
+            "IMG-20240816-WA0002.jpg",
+            "IMG-20240923-WA0016.jpg",
+            "IMG-20240923-WA0017.jpg",
+            "IMG-20240923-WA0018.jpg"
+        ];
 
-        function showCarousel() {
-            document.getElementById('carousel').style.display = 'block';
-            setInterval(() => {
-                const previousIndex = currentIndex;
-                currentIndex = (currentIndex + 1) % images.length;
-
-                images[previousIndex].classList.remove('active');
-                images[previousIndex].classList.add('prev');
-                images[currentIndex].classList.remove('prev');
-                images[currentIndex].classList.add('active');
-            }, 3000); // Cambia cada 3 segundos
+        function startFallingImages() {
+            const fallingImagesContainer = document.getElementById('falling-images');
+            imageSources.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = 'falling-img';
+                img.style.setProperty('--start', Math.random());
+                img.style.setProperty('--end', Math.random());
+                fallingImagesContainer.appendChild(img);
+            });
         }
     </script>
 
