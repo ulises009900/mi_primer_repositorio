@@ -46,6 +46,9 @@
         #carousel img.active {
             left: 0;
         }
+        #carousel img.prev {
+            left: -100%;
+        }
         .marquee-container {
             width: 100%;
             overflow: hidden;
@@ -75,10 +78,7 @@
         <div class="marquee-text">
             Mientras tú existas, mientras mi mirada te busque más allá de las colinas, 
             mientras nada me llene el corazón, si no es tu imagen, y haya una remota 
-            posibilidad de que estés viva en algún sitio, iluminada por una luz cualquiera... 
-            Mientras yo presienta que eres y te llamas así, con ese nombre tuyo tan pequeño, 
-            seguiré como ahora, amada mía, transido de distancia, bajo ese amor que crece 
-            y no se muere, bajo ese amor que sigue y nunca acaba.
+            posibilidad de que estés viva en algún sitio, iluminada por una luz cualquiera...
         </div>
     </div>
 
@@ -87,10 +87,26 @@
 
     <!-- Carrusel de fotos -->
     <div id="carousel">
-        <img src="foto1.jpg" class="active" alt="Foto 1">
-        <img src="foto2.jpg" alt="Foto 2">
-        <img src="foto3.jpg" alt="Foto 3">
-        <img src="foto4.jpg" alt="Foto 4">
+        <img src="IMG_20240915_162810.jpg" alt="Foto 1">
+        <img src="IMG_20240915_163033.jpg" alt="Foto 2">
+        <img src="IMG_20240920_214429.jpg" alt="Foto 3">
+        <img src="IMG_20240923_191339.jpg" alt="Foto 4">
+        <img src="IMG_20240923_191508.jpg" alt="Foto 5">
+        <img src="IMG_20240923_191513.jpg" alt="Foto 6">
+        <img src="IMG_20240923_191522.jpg" alt="Foto 7">
+        <img src="IMG_20240923_191845.jpg" alt="Foto 8">
+        <img src="IMG-20240715-WA0004.jpg" alt="Foto 9">
+        <img src="IMG-20240715-WA0005.jpg" alt="Foto 10">
+        <img src="IMG-20240715-WA0006.jpg" alt="Foto 11">
+        <img src="IMG-20240715-WA0007.jpg" alt="Foto 12">
+        <img src="IMG-20240715-WA0008.jpg" alt="Foto 13">
+        <img src="IMG-20240724-WA0002.jpg" alt="Foto 14">
+        <img src="IMG-20240816-WA0000.jpg" alt="Foto 15">
+        <img src="IMG-20240816-WA0001.jpg" alt="Foto 16">
+        <img src="IMG-20240816-WA0002.jpg" alt="Foto 17">
+        <img src="IMG-20240923-WA0016.jpg" alt="Foto 18">
+        <img src="IMG-20240923-WA0017.jpg" alt="Foto 19">
+        <img src="IMG-20240923-WA0018.jpg" alt="Foto 20">
     </div>
 
     <script>
@@ -100,10 +116,14 @@
         function showCarousel() {
             document.getElementById('carousel').style.display = 'block';
             setInterval(() => {
-                images[currentIndex].classList.remove('active');
+                const previousIndex = currentIndex;
                 currentIndex = (currentIndex + 1) % images.length;
+
+                images[previousIndex].classList.remove('active');
+                images[previousIndex].classList.add('prev');
+                images[currentIndex].classList.remove('prev');
                 images[currentIndex].classList.add('active');
-            }, 30000); // Cambia cada 30 segundos
+            }, 3000); // Cambia cada 3 segundos
         }
     </script>
 
