@@ -23,13 +23,8 @@
             color: #333;
             width: 80%;
             margin: 20px auto;
-            text-align: left;
+            text-align: center;
             line-height: 1.8;
-            white-space: pre-wrap; /* Para que respete los saltos de línea */
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para que el texto sea legible */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         button {
             background-color: #ff6f61;
@@ -52,7 +47,6 @@
             width: 100%;
             height: 100vh;
             pointer-events: none;
-            z-index: -1; /* Las imágenes están detrás del texto */
         }
         .falling-img {
             position: absolute;
@@ -100,7 +94,7 @@
         bajo ese amor que sigue y nunca acaba.
     </div>
 
-    <!-- Botón para mostrar las fotos debajo del poema -->
+    <!-- Botón para iniciar la lluvia de imágenes -->
     <button onclick="startFallingImages()">Te Amo</button>
 
     <!-- Contenedor de imágenes que "llueven" -->
@@ -145,3 +139,4 @@
 
 </body>
 </html>
+
